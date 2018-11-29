@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Git Demo</string>
+
+    <!--Error-->
+    <string name="no_internet">Please check you internet connection</string>
+    <string name="error_general">Something went wrong, please try again later</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="empty_field">Empty field</string>
+
+    <!--Startup screen-->
+    <string name="btn_login">Login</string>
+    <string name="btn_done">Done</string>
+    <string name="tran_sign_up">trans sign up</string>
+    <string name="tran_mountain">trans mountain</string>
+    <string name="tran_list_body">trans list body</string>
+    <string name="tran_toolbar">trans toolbar</string>
+
+    <!--Login Screen-->
+    <string name="username_email">GitHub username</string>
+    <string name="password">Password</string>
+
+    <!--Act List-->
+    <string name="tran_fab">trans fab</string>
+    <string name="no_repo">It seems that here is no repo created by the user</string>
+
+    <!--Detail Screen-->
+    <string name="tran_view">trans view</string>
+    <string name="tran_title">trans title</string>
+    <string name="tran_decs">trans desc</string>
+    <string name="tran_dummy_view">trans dummy view</string>
+    <string name="open_git">View in browser</string>
+
+</resources>
