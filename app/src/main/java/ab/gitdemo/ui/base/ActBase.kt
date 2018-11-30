@@ -25,7 +25,6 @@ open class ActBase : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //TODO: DI init
 
         setContentView(R.layout.act_base)
         if (Prefs.getBoolean(Constants.isLoggedIn, false)) {

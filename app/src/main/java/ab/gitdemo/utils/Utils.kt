@@ -17,6 +17,16 @@ import java.util.regex.Pattern
 
 object Utils {
 
+     val EMAIL_PATTERN = Pattern.compile(
+             "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+             "\\@" +
+             "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+             "(" +
+             "\\." +
+             "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+             ")+"
+     )
+
     fun animation(view: View, context: Context, animRes: Int) {
         view.animation = AnimationUtils.loadAnimation(context, animRes)
     }
@@ -33,7 +43,7 @@ object Utils {
     }
 
       fun isEmailValid(email: String): Boolean {
-          return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+          return EMAIL_PATTERN.matcher(email).matches()
       }
 
       fun isConnectedToNetwork(context: Context): Boolean {
