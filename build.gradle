@@ -27,14 +27,14 @@ task clean(type: Delete) {
 
 ext {
     // Sdk and tools
-    minSdkVersion = 16
-    targetSdkVersion = 28
-    compileSdkVersion = 28
-    buildToolsVersion = '28'
+    minSdk = 16
+    targetSdk = 28
+    compileSdk = 28
+    buildTools = '28'
 
     // App dependencies
-    supportLibraryVersion = '28.0.0'
-    multidexVersion = '1.0.3'
+    supportLibrary = '28.0.0'
+    multidex = '1.0.3'
 
     firebase_core = '16.0.4'
     firebase_auth = '16.0.5'
@@ -47,18 +47,18 @@ ext {
     map = '16.0.0'
 
     //Test dependencies
-    junitVersion = '4.12'
-    espressoVersion = '3.0.3'
-    mockitoVersion = '2.7.1'
+    junit = '4.12'
+    espresso = '3.0.3'
+    mockito = '2.7.1'
 
     //Misc
     calligraphy = '2.3.0'
-    glideVersion = '3.7.0'
-    prefsLibVersion = '1.9.0'
-    webviewVersion = '1.2.7'
-    imagePickerVersion = '1.13.1'
-    circularImageVersion = '2.2.0'
-    picassoVersion = '2.71828'
+    glide = '3.7.0'
+    prefsLib = '1.9.0'
+    webview = '1.2.7'
+    imagePicker = '1.13.1'
+    circularImage = '3.0.0'
+    picasso = '2.71828'
 
     //API
     gson = '2.8.5'
