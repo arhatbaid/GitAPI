@@ -36,7 +36,7 @@ abstract class FragBase : Fragment(),
         getActBase().onError(resId)
     }
 
-    override fun onError(message: String) {
+    override fun onError(message: String?) {
         getActBase().onError(message)
     }
 

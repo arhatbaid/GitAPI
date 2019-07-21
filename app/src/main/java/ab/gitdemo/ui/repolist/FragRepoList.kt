@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.arhatbaid.boxmedemo.ui.repodetail.FragRepoDetail
+import ab.gitdemo.ui.repodetail.FragRepoDetail
 import com.arhatbaid.boxmedemo.ui.startup.FragStartUp
 import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.frag_repo_list.*

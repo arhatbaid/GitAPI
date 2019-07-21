@@ -1,4 +1,4 @@
-package com.arhatbaid.boxmedemo.ui.repodetail
+package ab.gitdemo.ui.repodetail
 
 import ab.gitdemo.R
 import ab.gitdemo.ui.base.FragBase

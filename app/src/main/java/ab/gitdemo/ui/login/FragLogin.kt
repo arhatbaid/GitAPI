@@ -3,10 +3,8 @@ package ab.gitdemo.ui.login
 import ab.gitdemo.R
 import ab.gitdemo.ui.base.FragBase
 import ab.gitdemo.ui.repolist.FragRepoList
-import ab.gitdemo.utils.Constants
 import ab.gitdemo.utils.UtilTextWatcher
 import ab.gitdemo.utils.Utils
-import ab.gitdemo.webapi.model.UserData
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -14,25 +12,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
-import com.pixplicity.easyprefs.library.Prefs
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.frag_login.*
 
 class FragLogin : FragBase(),
-        ISignInView,
+        Login.View,
         View.OnClickListener,
         TextView.OnEditorActionListener {
 
-    private var signInPresenter: ISignInPresenterImpl? = null
+    private var loginPresenter: LoginPresenter? = null
 
     private var disposable: Disposable? = null
 
+    //region Life cycle methods
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.frag_login, container, false)
     }
 
     override fun setUpView(view: View) {
-        signInPresenter = ISignInPresenterImpl(this, getActBase())
+        loginPresenter = LoginPresenter(this)
 
         btnDone.setOnClickListener(this)
         txtUsername.setOnClickListener(this)
@@ -46,6 +44,15 @@ class FragLogin : FragBase(),
         txtUsername.addTextChangedListener(UtilTextWatcher(getActBase(), ipTxtUsername, R.string.empty_field))
     }
 
+    override fun onPause() {
+        super.onPause()
+        if (disposable != null && !disposable?.isDisposed!!){
+            disposable!!.dispose()
+        }
+    }
+    //endregion Life cycle methods
+
+    //region View methods
     override fun onClick(v: View?) {
         when (v) {
             btnDone -> {
@@ -74,36 +81,18 @@ class FragLogin : FragBase(),
 
     override fun successValidUserName() {
         if (Utils.isConnectedToNetwork(getActBase())) {
-            disposable = signInPresenter?.fetchedUserDetails(getActBase(), txtUsername.text.toString().trim())
+            disposable = loginPresenter?.fetchedUserDetails(getActBase(), txtUsername.text.toString().trim())
         } else {
             onError(R.string.no_internet)
         }
     }
 
-    override fun onErrorFetchedUserDetail(error: Throwable) {
-        onError(error.localizedMessage)
-    }
-
-    override fun fetchedUserDetails(result: UserData?) {
-        if(result != null){
-            Prefs.putBoolean(Constants.isLoggedIn, true)
-            Prefs.putString(Constants.username, result.login)
-            val  bundle = Bundle()
-            bundle.putString(Constants.username, result.login)
+    override fun openRepoListFrag(bundle: Bundle) {
             replaceFragment(FragRepoList(), bundle)
-        }else{
-            onError("Something went wrong!! Please check your entered username")
-        }
     }
+    //endregion View methods
 
     private fun onDoneClicked() {
-        signInPresenter?.validateCredentials(txtUsername.text.toString().trim())
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (disposable != null && !disposable?.isDisposed!!){
-            disposable!!.dispose()
-        }
+        loginPresenter?.validateCredentials(txtUsername.text.toString().trim())
     }
 }

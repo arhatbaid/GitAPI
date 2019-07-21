@@ -13,14 +13,6 @@ class FragStartUp : FragBase(),
         View.OnClickListener {
 
     private val arrTrans = HashMap<String, View>()
-    override fun onClick(v: View?) {
-        when (v) {
-            btnSignUp -> {
-                arrTrans.put(getString(R.string.tran_sign_up), btnSignUp as View)
-                replaceFragment(FragLogin(), null, arrTrans)
-            }
-        }
-    }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -29,5 +21,14 @@ class FragStartUp : FragBase(),
 
     override fun setUpView(view: View) {
         btnSignUp.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        when (v) {
+            btnSignUp -> {
+                arrTrans[getString(R.string.tran_sign_up)] = btnSignUp as View
+                replaceFragment(FragLogin(), null, arrTrans)
+            }
+        }
     }
 }

@@ -1,6 +1,5 @@
 package ab.gitdemo.ui.base
 
-
 import ab.gitdemo.R
 import ab.gitdemo.ui.repolist.FragRepoList
 import ab.gitdemo.utils.Constants
@@ -19,14 +18,13 @@ import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.act_base.*
 
 open class ActBase : AppCompatActivity(),
-        IBaseView,
-        FragBase.Callback {
+    IBaseView,
+    FragBase.Callback {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //TODO: DI init
-
         setContentView(R.layout.act_base)
         if (Prefs.getBoolean(Constants.isLoggedIn, false)) {
             initFrag(FragRepoList())
@@ -45,21 +43,23 @@ open class ActBase : AppCompatActivity(),
 
     override fun onError(resId: Int) {
         Toast.makeText(this, resId, Toast.LENGTH_LONG).show()
-
     }
 
-    override fun onError(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    override fun onError(message: String?) {
+        if (!message.isNullOrEmpty()) {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        } else {
+            Toast.makeText(this, "Something went wrong!! Please try again later", Toast.LENGTH_LONG)
+                .show()
+        }
     }
 
     override fun showMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-
     }
 
     override fun showMessage(resId: Int) {
         Toast.makeText(this, resId, Toast.LENGTH_LONG).show()
-
     }
 
     override fun isNetworkConnected(): Boolean {
@@ -78,13 +78,14 @@ open class ActBase : AppCompatActivity(),
         startActivity(intent)
     }
 
-
     override fun replaceFragment(frag: Fragment, bundle: Bundle?) {
         val ft = supportFragmentManager?.beginTransaction()
         if (bundle != null) frag.arguments = bundle
         ft?.addToBackStack(frag::class.java.name)
-        ft?.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
-                R.anim.slide_in_right, R.anim.slide_out_right)
+        ft?.setCustomAnimations(
+            R.anim.slide_in_left, R.anim.slide_out_left,
+            R.anim.slide_in_right, R.anim.slide_out_right
+        )
         ft?.replace(R.id.fragContainer, frag, frag::class.java.name)
         ft?.commit()
     }
@@ -93,10 +94,10 @@ open class ActBase : AppCompatActivity(),
         val ft = supportFragmentManager?.beginTransaction()
         if (bundle != null) frag.arguments = bundle
         ft?.addToBackStack(frag::class.java.name)
-         for (pair in hashMap){
-             ft?.addSharedElement(pair.value, pair.key)
-             break
-         }
+        for (pair in hashMap) {
+            ft?.addSharedElement(pair.value, pair.key)
+            break
+        }
         ft?.replace(R.id.fragContainer, frag, frag::class.java.name)
         ft?.commitAllowingStateLoss()
     }
@@ -124,30 +125,28 @@ open class ActBase : AppCompatActivity(),
         val ft = supportFragmentManager?.beginTransaction()
         if (bundle != null) frag.arguments = bundle
         ft?.addToBackStack(frag::class.java.name)
-        ft?.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
-                R.anim.slide_in_right, R.anim.slide_out_right)
+        ft?.setCustomAnimations(
+            R.anim.slide_in_left, R.anim.slide_out_left,
+            R.anim.slide_in_right, R.anim.slide_out_right
+        )
         ft?.add(R.id.fragContainer, frag, frag::class.java.name)
         ft?.commit()
     }
 
     override fun initFrag(frag: Fragment) {
         supportFragmentManager.beginTransaction()
-                .replace(R.id.fragContainer, frag, frag::class.java.name)
-                .commit()
+            .replace(R.id.fragContainer, frag, frag::class.java.name)
+            .commit()
     }
 
     override fun onFragmentAttached() {
-
     }
 
     override fun onFragmentDetached(tag: String) {
         Log.d(tag, "Detached")
     }
 
-
     override fun onBackPressed() {
-
-
         val fragList = supportFragmentManager.findFragmentByTag(FragRepoList::class.java.name)
         if (fragList != null && fragList.isVisible && supportFragmentManager.fragments.size == 1) {
             finish()
@@ -155,6 +154,4 @@ open class ActBase : AppCompatActivity(),
         }
         super.onBackPressed()
     }
-
-
 }

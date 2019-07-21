@@ -16,10 +16,6 @@ abstract class DialogBase : DialogFragment(), IDialogView {
 
     private var actBase: ActBase? = null
 
-    fun getActBase(): ActBase {
-        return actBase!!
-    }
-
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         if (context is ActBase) {
@@ -32,38 +28,37 @@ abstract class DialogBase : DialogFragment(), IDialogView {
     override fun onActivityCreated(arg0: Bundle?) {
         super.onActivityCreated(arg0)
         dialog.window!!
-                .attributes.windowAnimations = R.style.AppTheme_DialogAnimation
+            .attributes.windowAnimations = R.style.AppTheme_DialogAnimation
     }
 
-
-    override fun onError(message: String) {
-        if (actBase != null) {
-            actBase!!.onError(message)
+    override fun onError(message: String?) {
+        actBase.let {
+            it!!.onError(message)
         }
     }
 
     override fun onError(@StringRes resId: Int) {
-        if (actBase != null) {
-            actBase!!.onError(resId)
+        actBase.let {
+            it!!.onError(resId)
         }
     }
 
     override fun showMessage(message: String) {
-        if (actBase != null) {
-            actBase!!.showMessage(message)
+        actBase.let {
+            it!!.showMessage(message)
         }
     }
 
     override fun showMessage(@StringRes resId: Int) {
-        if (actBase != null) {
-            actBase!!.showMessage(resId)
+        actBase.let {
+            it!!.showMessage(resId)
         }
     }
 
     override fun isNetworkConnected(): Boolean {
-        return if (actBase != null) {
-            actBase!!.isNetworkConnected()
-        } else false
+        return actBase.let {
+            it!!.isNetworkConnected()
+        }
     }
 
     override fun onDetach() {
@@ -72,14 +67,15 @@ abstract class DialogBase : DialogFragment(), IDialogView {
     }
 
     override fun hideKeyboard() {
-        if (actBase != null) {
-            actBase!!.hideKeyboard()
+        actBase.let {
+            it!!.hideKeyboard()
         }
     }
 
     override fun clearBackstack() {
-        if (actBase != null)
-            actBase!!.clearBackstack()
+        actBase.let {
+            it!!.clearBackstack()
+        }
     }
 
     protected abstract fun setUp(view: View)
@@ -88,9 +84,9 @@ abstract class DialogBase : DialogFragment(), IDialogView {
         // the content
         val root = RelativeLayout(activity)
         root.layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT)
-
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         // creating the fullscrdialogeen dialog
         val dialog = Dialog(context!!)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -98,8 +94,9 @@ abstract class DialogBase : DialogFragment(), IDialogView {
         if (dialog.window != null) {
 //            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.window!!.setLayout(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT)
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
         }
         dialog.setCanceledOnTouchOutside(false)
 
@@ -123,18 +120,26 @@ abstract class DialogBase : DialogFragment(), IDialogView {
 
     override fun dismissDialog(tag: String) {
         dismiss()
-        actBase!!.onFragmentDetached(tag)
+        actBase.let {
+            it!!.onFragmentDetached(tag)
+        }
     }
 
     override fun showProgress() {
-        actBase!!.showProgress()
+        actBase.let {
+            it!!.showProgress()
+        }
     }
 
     override fun hideProgress() {
-        actBase!!.hideProgress()
+        actBase.let {
+            it!!.hideProgress()
+        }
     }
 
     override fun <T> changeActivity(classType: Class<T>?, bundle: Bundle?) {
-        actBase!!.changeActivity(classType, bundle)
+        actBase.let {
+            changeActivity(classType, bundle)
+        }
     }
 }

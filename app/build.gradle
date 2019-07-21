@@ -34,7 +34,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
@@ -54,6 +54,6 @@ dependencies {
     //Nisc
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
     implementation "com.thefinestartist:finestwebview:$rootProject.webviewVersion"
-    implementation "de.hdodenhof:circleimageview:$rootProject.circularImageVersion"
+    implementation "de.hdodenhof:circleimageview:3.0.0"
     implementation "com.pixplicity.easyprefs:library:$rootProject.prefsLibVersion"
 }
